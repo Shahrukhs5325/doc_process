@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Alert, Box, Stack, TableContainer, Typography } from '@mui/material';
+import { Alert, Box, CircularProgress, Stack, TableContainer, Typography } from '@mui/material';
 import {
   Message,
   Table,
@@ -37,6 +37,7 @@ const DocumnetList: React.FC<Props> = () => {
   const navigate = useNavigate();
 
   const [files, setFiles] = React.useState<string>("");
+  const [loadingDelete, setLoadingDelete] = React.useState<{ [key: string]: boolean }>({});
 
   const {
     isLoading,
@@ -53,16 +54,17 @@ const DocumnetList: React.FC<Props> = () => {
   }
 
   const deleteHandler = async (fileKey: string) => {
+    setLoadingDelete((prev) => ({ ...prev, [fileKey]: true }));
     try {
       const res = await deleteFiles(fileKey);
       console.log(res?.data);
-
       refetch();
-
     } catch (err) {
       console.log('error deleteHandler : ', err);
+    } finally {
+      setLoadingDelete((prev) => ({ ...prev, [fileKey]: false }));
     }
-  }
+  };
 
 
 
@@ -134,8 +136,13 @@ const DocumnetList: React.FC<Props> = () => {
                 <TableCell align="right">
                   <ButtonIcon
                     className="mr-0.5 text-gray"
-                    onClick={() => deleteHandler(row?.fileKey)}>
-                    <PiPintGlassBold />
+                    onClick={() => deleteHandler(row?.fileKey)} disabled={loadingDelete[row?.fileKey]}
+                  >
+                    {loadingDelete[row?.fileKey] ? (
+                      <CircularProgress size={24} color="inherit" />
+                    ) : (
+                      <PiPintGlassBold />
+                    )}
                   </ButtonIcon>
                 </TableCell>
                 {/* <TableCell align="right">
