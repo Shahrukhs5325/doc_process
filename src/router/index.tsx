@@ -4,12 +4,14 @@ import AppContent from "../components/auth/AppContent";
 import Layout from "../components/layout/Layout";
 import Dashboard from "../pages/Dashboard";
 import DocumentsExtraction from "../components/Steps/DocumentsExtraction";
+import DocumnetList from "../components/Steps/DocumnetList";
+import UploadDocumnet from "../components/Steps/UploadDocumnet";
 
 const AppRouter = () => {
 
     const PrivateRoutes = [
-        // { url: "/upload_documents", component: <UploadDocumnet /> },
-        // { url: "/documents_capture", component: <DocumnetList /> },
+        { url: "/upload_documents", component: <UploadDocumnet /> },
+        { url: "/documents_capture", component: <DocumnetList /> },
         { url: "/documents_extraction", component: <DocumentsExtraction /> },
 
 
