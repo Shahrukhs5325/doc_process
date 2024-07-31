@@ -23,10 +23,11 @@ const acceptedFileTypes: string[] = [
 ];
 
 type Props = {
+  next?: (() => void) | undefined
 };
 
 
-const UploadDocumnet: React.FC<Props> = () => {
+const UploadDocumnet: React.FC<Props> = ({ next }) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -85,7 +86,7 @@ const UploadDocumnet: React.FC<Props> = () => {
   }
 
   return (
-    <Stack gap={4}>
+    <Stack gap={4} p={3}>
       <DropZone
         acceptedFileTypes={acceptedFileTypes}
         onDropComplete={({ acceptedFiles }) => {
@@ -125,9 +126,9 @@ const UploadDocumnet: React.FC<Props> = () => {
         <Stack width={120} >
           <Button isLoading={isLoading} isDisabled={!files.length || !!errMsg || isUpload} onClick={uploadDoc}>Upload</Button>
         </Stack>
-        {/* <Stack width={120} >
-          <Button isDisabled={!isUpload} onClick={nextBtnHandler}>Next</Button>
-        </Stack> */}
+        <Stack width={120} >
+          <Button isDisabled={!isUpload} onClick={next}>Next</Button>
+        </Stack>
       </Stack>
     </Stack>
   );

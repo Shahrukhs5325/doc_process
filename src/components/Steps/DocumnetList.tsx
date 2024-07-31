@@ -1,39 +1,28 @@
 import * as React from 'react';
-import { Alert, Box, CircularProgress, Stack, TableContainer, Typography } from '@mui/material';
+import { CircularProgress, Stack, TableContainer, Typography } from '@mui/material';
 import {
-  Message,
   Table,
   TableBody,
   TableCell,
   TableHead,
-  TableRow,
+  TableRow
 } from '@aws-amplify/ui-react';
 import ButtonIcon from '../button/ButtonIcon';
-import { PiChatCircleTextBold, PiDownloadBold, PiExportBold, PiEyeBold, PiPintGlassBold } from 'react-icons/pi';
+import { PiChatCircleTextBold, PiDownloadBold, PiExportBold, PiPintGlassBold } from 'react-icons/pi';
 import { useQuery } from '@tanstack/react-query';
 import { deleteFiles, getAllFiles, splitFiles } from '../../apis/doc/docsApi';
-import DocumentViwer from '../document/DocumentViwer';
 import moment from 'moment';
 import { useNavigate } from 'react-router-dom';
 
 
 
 type Props = {
+  next?: (() => void) | undefined;
 };
 
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-) {
-  return { name, calories, fat, carbs, protein };
-}
 
-
-const DocumnetList: React.FC<Props> = () => {
+const DocumnetList: React.FC<Props> = ({ next }) => {
   const navigate = useNavigate();
 
   const [files, setFiles] = React.useState<string>("");
@@ -47,6 +36,7 @@ const DocumnetList: React.FC<Props> = () => {
     queryKey: ['all_files',],
     queryFn: () => getAllFiles(),
   });
+
 
 
   const uploadDoc = () => {
@@ -81,6 +71,7 @@ const DocumnetList: React.FC<Props> = () => {
   }
 
   const fileViewHandler = async (fileKey: string) => {
+    next()
     navigate(`/documents_extraction`, {
       state: {
         fileKey: fileKey
@@ -90,7 +81,7 @@ const DocumnetList: React.FC<Props> = () => {
 
 
   return (
-    <>
+    !isLoading ? <>
       <TableContainer >
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -178,7 +169,10 @@ const DocumnetList: React.FC<Props> = () => {
       {/* <Box>
         <DocumentViwer open={!!files} url={files} />
       </Box> */}
-    </>
+    </> :
+      <Stack height={340} justifyContent={"center"} alignItems={"center"}>
+        <CircularProgress size={24} color="inherit" />
+      </Stack>
   );
 }
 

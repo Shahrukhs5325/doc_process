@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { CircularProgress, TableContainer, Typography } from '@mui/material';
+import { CircularProgress, Stack, TableContainer, Typography } from '@mui/material';
 import {
   Table,
   TableBody,
@@ -14,9 +14,12 @@ import { deleteFiles, splitFiles } from '../../apis/doc/docsApi';
 import { useLocation, useNavigate } from 'react-router-dom';
 import moment from 'moment';
 
-type Props = {};
+type Props = {
+  next?: (() => void) | undefined
 
-const DocumentsExtraction: React.FC<Props> = () => {
+};
+
+const DocumentsExtraction: React.FC<Props> = ({next}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const fileKey = location?.state?.fileKey;
@@ -47,7 +50,7 @@ const DocumentsExtraction: React.FC<Props> = () => {
   };
 
   return (
-    <>
+    !isLoading ? <>
       <TableContainer>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -115,7 +118,10 @@ const DocumentsExtraction: React.FC<Props> = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </> :
+      <Stack height={340} justifyContent={"center"} alignItems={"center"}>
+        <CircularProgress size={24} color="inherit" />
+      </Stack>
   );
 };
 

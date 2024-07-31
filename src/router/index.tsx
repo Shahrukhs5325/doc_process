@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Routes, Route } from "react-router-dom";
-import UploadDocumnet from "../components/Steps/UploadDocumnet";
-import DocumnetList from "../components/Steps/DocumnetList";
 import AppContent from "../components/auth/AppContent";
 import Layout from "../components/layout/Layout";
 import Dashboard from "../pages/Dashboard";
@@ -10,8 +8,8 @@ import DocumentsExtraction from "../components/Steps/DocumentsExtraction";
 const AppRouter = () => {
 
     const PrivateRoutes = [
-        { url: "/upload_documents", component: <UploadDocumnet /> },
-        { url: "/documents_capture", component: <DocumnetList /> },
+        // { url: "/upload_documents", component: <UploadDocumnet /> },
+        // { url: "/documents_capture", component: <DocumnetList /> },
         { url: "/documents_extraction", component: <DocumentsExtraction /> },
 
 
@@ -21,7 +19,7 @@ const AppRouter = () => {
         return (
             <div>
                 <h2>Nothing to see here!</h2>
-                <p>
+                <p className="cursor-pointer">
                     Go to the home page
                 </p>
             </div>
