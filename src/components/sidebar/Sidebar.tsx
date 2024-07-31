@@ -5,7 +5,7 @@ import StepButton from "@mui/material/StepButton";
 import Typography from "@mui/material/Typography";
 import { Box, Grid, Paper, Stack } from "@mui/material";
 import { Card } from "@aws-amplify/ui-react";
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import UploadDocumnet from "../Steps/UploadDocumnet";
 import DocumnetList from "../Steps/DocumnetList";
 import DocumentsExtraction from "../Steps/DocumentsExtraction";
@@ -46,11 +46,22 @@ const STEPS = [
 
 const Sidebar: React.FC<Props> = () => {
     const navigate = useNavigate();
+    const location = useLocation();
 
     const [activeStep, setActiveStep] = React.useState(0);
     const [completed, setCompleted] = React.useState<{
         [k: number]: boolean;
     }>({});
+
+    React.useEffect(() => {
+        // Find the step that matches the current path
+        const currentPath = location.pathname.split("/").pop();
+        const stepIndex = STEPS.findIndex((step) => step.path === currentPath);
+        if (stepIndex !== -1) {
+            setActiveStep(stepIndex);
+        }
+    }, [location]);
+
 
 
     const totalSteps = React.useCallback(() => STEPS.length, []);
@@ -149,8 +160,7 @@ const Sidebar: React.FC<Props> = () => {
                         ) : STEPS[activeStep].path === "documents_capture" ? (
                             <DocumnetList next={next} />
                         ) : STEPS[activeStep].path === "documents_extraction" ? (
-                            // <DocumentsExtraction next={next} />
-                            <Outlet />
+                            <DocumentsExtraction next={next} />
                         ) : null}
                     </Paper>
                 </Stack>
