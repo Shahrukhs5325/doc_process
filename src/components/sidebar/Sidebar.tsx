@@ -139,7 +139,7 @@ const Sidebar: React.FC<Props> = () => {
 
             <Grid item xs={9}>
 
-                <Stack sx={{ mx: 6 }}>
+                <Stack sx={{ mx: 6, mb: 10 }}>
                     <Stack sx={{ position: 'relative', top: '-80px', left: '10px' }}>
                         <Typography color={"white"} variant="h5">{STEPS[activeStep].name}</Typography>
                     </Stack>
@@ -150,7 +150,7 @@ const Sidebar: React.FC<Props> = () => {
                             <DocumnetList next={next} />
                         ) : STEPS[activeStep].path === "documents_extraction" ? (
                             // <DocumentsExtraction next={next} />
-                            <Outlet/>
+                            <Outlet />
                         ) : null}
                     </Paper>
                 </Stack>
