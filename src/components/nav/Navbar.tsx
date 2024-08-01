@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { BaseProps } from '../../@types/common';
+import { signOut } from "aws-amplify/auth"
 
-type Props = BaseProps & {
-  signOut?: () => void;
+type Props = {
 };
 
 const Navbar: React.FC<Props> = () => {
   const [open, setOpen] = useState(false);
   const [showMegaMenu, setShowMegaMenu] = useState(false);
 
-  const signOut = () => {
-    localStorage.clear();
+  const signOutHandler = async () => {
+    await signOut()
+    //  await localStorage.clear();
   }
 
   return (
@@ -59,7 +59,7 @@ const Navbar: React.FC<Props> = () => {
                     <div>
                       <div className="flex flex-col space-y-2">
                         <div className="text-base font-medium text-body-color hover:text-primary "
-                          onClick={() => signOut()}>
+                          onClick={() => signOutHandler()}>
                           Sign Out
                         </div>
                       </div>
