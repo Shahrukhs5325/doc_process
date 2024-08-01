@@ -1,84 +1,96 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { signOut } from "aws-amplify/auth"
+import { Avatar, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material';
+import logo from '../../assets/brand-logo..png';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
 };
 
 const Navbar: React.FC<Props> = () => {
-  const [open, setOpen] = useState(false);
-  const [showMegaMenu, setShowMegaMenu] = useState(false);
+  const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
 
   const signOutHandler = async () => {
     await signOut()
-    //  await localStorage.clear();
   }
 
   return (
 
-    <div className="flex w-full items-center justify-between bg-theme-color py-3 px-8" >
-
-      <div className="flex w-full items-center justify-between gap-2  text-white font-lg">
-        Ezy Intelligent Document Processing
-      </div>
-      <div>
-        <div className="container mx-auto">
-
-          <div className="flex w-full items-center justify-between ">
-
-            <div
-              id="navbarCollapse"
-              className={`absolute right-4 top-full w-full  rounded-lg bg-white   shadow lg:static lg:block lg:w-full lg:max-w-full lg:shadow-none lg:dark:bg-transparent ${!open && "hidden"}`}>
-              <div className="block">
-                <div className="relative">
-                  <button
-                    onClick={() => setShowMegaMenu(!showMegaMenu)}
-                    className="flex w-full items-center justify-between gap-1 py-2  text-white font-medium text-body-color "
-                  >
-                    user email
-                    <span
-                      className={`${showMegaMenu ? "-scale-y-100" : ""} duration-200`}
-                    >
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M10 14.25C9.8125 14.25 9.65625 14.1875 9.5 14.0625L2.3125 7C2.03125 6.71875 2.03125 6.28125 2.3125 6C2.59375 5.71875 3.03125 5.71875 3.3125 6L10 12.5312L16.6875 5.9375C16.9688 5.65625 17.4062 5.65625 17.6875 5.9375C17.9688 6.21875 17.9688 6.65625 17.6875 6.9375L10.5 14C10.3437 14.1562 10.1875 14.25 10 14.25Z"
-                          fill="currentColor"
-                        />
-                      </svg>
-                    </span>
-                  </button>
-
-                  <div
-                    className={`w-full rounded-md bg-white p-2 lg:absolute lg:right-0 lg:top-full lg:w-[220px] lg:p-4 lg:shadow-lg ${showMegaMenu ? "block" : "hidden"}`}
-                  >
-                    <div>
-                      <div className="flex flex-col space-y-2">
-                        <div className="text-base font-medium text-body-color hover:text-primary "
-                          onClick={() => signOutHandler()}>
-                          Sign Out
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
+    <Stack className='bg-theme-color ' >
+      <Stack direction={"row"} justifyContent={"space-between"} sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', px: 4, py: 2 }}>
+        {/* <Typography color={"white"} variant='h5'>ActiveGen.ai</Typography> */}
+        <div onClick={() => navigate("/")}>
+          <img src={logo} width="200" />
         </div>
-      </div>
 
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+          </IconButton>
+        </Tooltip>
+      </Stack>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '&::before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              top: 0,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <MenuItem onClick={signOutHandler}>
+          <Avatar /> Logout
+        </MenuItem>
+        {/* <MenuItem onClick={handleClose}>
+          <Avatar /> My account
+        </MenuItem>
+        <Divider /> */}
 
-    </div>
-
-
+      </Menu>
+    </Stack>
   );
 };
 
