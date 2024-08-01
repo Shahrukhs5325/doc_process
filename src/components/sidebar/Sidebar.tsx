@@ -154,15 +154,24 @@ const Sidebar: React.FC<Props> = () => {
                     <Stack sx={{ position: 'relative', top: '-80px', left: '10px' }}>
                         <Typography color={"white"} variant="h5">{STEPS[activeStep].name}</Typography>
                     </Stack>
-                    <Paper>
+                    <Stack>
                         {STEPS[activeStep].path === "upload_documents" ? (
-                            <UploadDocumnet next={next} />
+                            <UploadDocumnet
+                                next={next}
+                                handleBack={handleBack}
+                            />
                         ) : STEPS[activeStep].path === "documents_capture" ? (
-                            <DocumnetList next={next} />
+                            <DocumnetList
+                                next={next}
+                                handleBack={handleBack}
+                            />
                         ) : STEPS[activeStep].path === "documents_extraction" ? (
-                            <DocumentsExtraction next={next} />
+                            <DocumentsExtraction
+                                next={next}
+                                handleBack={handleBack}
+                            />
                         ) : null}
-                    </Paper>
+                    </Stack>
                 </Stack>
             </Grid>
         </Grid>

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stack, Typography } from '@mui/material';
+import { Paper, Stack, Typography } from '@mui/material';
 import {
   Button,
   DropZone,
@@ -23,11 +23,12 @@ const acceptedFileTypes: string[] = [
 ];
 
 type Props = {
-  next?: (() => void) | undefined
+  next?: (() => void) | undefined;
+  handleBack?: (() => void) | undefined;
 };
 
 
-const UploadDocumnet: React.FC<Props> = ({ next }) => {
+const UploadDocumnet: React.FC<Props> = ({ next, handleBack }) => {
   const navigate = useNavigate();
 
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -86,51 +87,50 @@ const UploadDocumnet: React.FC<Props> = ({ next }) => {
   }
 
   return (
-    <Stack gap={4} p={3}>
-      <DropZone
-        acceptedFileTypes={acceptedFileTypes}
-        onDropComplete={({ acceptedFiles }) => {
-          setFiles(acceptedFiles);
-        }}
-      >
-        <Flex direction="column" alignItems="center">
-          <Text>Drag file here or</Text>
-          <Button size="small" onClick={() => hiddenInput.current?.click()}>
-            Browse
-          </Button>
-        </Flex>
-        <VisuallyHidden>
-          <input
-            type="file"
-            tabIndex={-1}
-            ref={hiddenInput}
-            onChange={onFilePickerChange}
-            multiple={true}
-            accept={acceptedFileTypes.join(',')}
-          />
-        </VisuallyHidden>
-      </DropZone>
-      {files.map((file, i) => (
-        <Stack direction={"row"} justifyContent={"space-between"} className='mx-3' gap={4} key={i}>
-          <Typography>{file.name}</Typography>
-          <Typography>{file.type}</Typography>
-          {/* <Typography>{`${(file.size)/ Math.pow(1024,3)}`}Mb</Typography> */}
-        </Stack>
-      ))}
+    <Paper>
+      <Stack gap={4} p={3}>
 
-      {errMsg && !isLoading && <Stack>
-        <Typography color={"red"}>{errMsg}</Typography>
-      </Stack>}
-
-      <Stack direction={"row"} justifyContent={"end"} gap={4}>
-        <Stack width={120} >
+        <Stack direction={"row"} justifyContent={"end"} gap={4}>
           <Button isLoading={isLoading} isDisabled={!files.length || !!errMsg || isUpload} onClick={uploadDoc}>Upload</Button>
-        </Stack>
-        <Stack width={120} >
           <Button isDisabled={!isUpload} onClick={next}>Next</Button>
         </Stack>
+
+        <DropZone
+          acceptedFileTypes={acceptedFileTypes}
+          onDropComplete={({ acceptedFiles }) => {
+            setFiles(acceptedFiles);
+          }}
+        >
+          <Flex direction="column" alignItems="center">
+            <Text>Drag file here or</Text>
+            <Button size="small" onClick={() => hiddenInput.current?.click()}>
+              Browse
+            </Button>
+          </Flex>
+          <VisuallyHidden>
+            <input
+              type="file"
+              tabIndex={-1}
+              ref={hiddenInput}
+              onChange={onFilePickerChange}
+              multiple={true}
+              accept={acceptedFileTypes.join(',')}
+            />
+          </VisuallyHidden>
+        </DropZone>
+        {files.map((file, i) => (
+          <Stack direction={"row"} justifyContent={"space-between"} className='mx-3' gap={4} key={i}>
+            <Typography>{file.name}</Typography>
+            <Typography>{file.type}</Typography>
+            {/* <Typography>{`${(file.size)/ Math.pow(1024,3)}`}Mb</Typography> */}
+          </Stack>
+        ))}
+
+        {errMsg && !isLoading && <Stack>
+          <Typography color={"red"}>{errMsg}</Typography>
+        </Stack>}
       </Stack>
-    </Stack>
+    </Paper>
   );
 }
 
