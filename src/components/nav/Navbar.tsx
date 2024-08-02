@@ -1,6 +1,6 @@
 import React from 'react';
 import { signOut } from "aws-amplify/auth"
-import { Avatar, IconButton, Menu, MenuItem, Stack, Tooltip, Typography } from '@mui/material';
+import { Avatar, IconButton, Menu, MenuItem, Stack, Tooltip } from '@mui/material';
 import logo from '../../assets/brand-logo..png';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,14 +26,14 @@ const Navbar: React.FC<Props> = () => {
 
   return (
 
-    <Stack className='bg-theme-color ' >
-      <Stack direction={"row"} justifyContent={"space-between"} sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', px: 4, py: 2 }}>
+    <Stack className='bg-theme-color fixed-navbar' >
+      <Stack direction={"row"} justifyContent={"space-between"} sx={{ display: 'flex', alignItems: 'center', textAlign: 'center', px: 4, py: 1 }}>
         {/* <Typography color={"white"} variant='h5'>ActiveGen.ai</Typography> */}
         <div onClick={() => navigate("/")}>
           <img src={logo} width="200" />
         </div>
 
-        <Tooltip title="Account settings">
+        <Tooltip title="Menu">
           <IconButton
             onClick={handleClick}
             size="small"

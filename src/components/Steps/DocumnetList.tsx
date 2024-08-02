@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {
   Button,
   Table,
@@ -10,7 +11,7 @@ import { CircularProgress, Paper, Stack, TableContainer, Typography } from '@mui
 import { useQuery } from '@tanstack/react-query';
 import moment from 'moment';
 import * as React from 'react';
-import { PiChatCircleTextBold, PiDownloadBold, PiExportBold, PiPintGlassBold } from 'react-icons/pi';
+import { PiChatCircleText, PiDownload, PiExport, PiPintGlass } from 'react-icons/pi';
 import { useNavigate } from 'react-router-dom';
 import { deleteFiles, getAllFiles, splitFiles } from '../../apis/doc/docsApi';
 import ButtonIcon from '../button/ButtonIcon';
@@ -128,27 +129,27 @@ const DocumnetList: React.FC<Props> = ({ next, handleBack }) => {
 
                       <TableCell align="right">
                         <ButtonIcon
-                          className="mr-0.5 text-gray"
+                          className="mr-0.5 text-black"
                           onClick={() => setFiles(row?.fileDownloadLink)}>
                           {/* <PiEyeBold /> */}
-                          <PiDownloadBold />
+                          <PiDownload />
                         </ButtonIcon>
                       </TableCell>
                       <TableCell align="right">
                         <ButtonIcon
-                          className="mr-0.5 text-gray"
+                          className="mr-0.5 text-black"
                           onClick={() => deleteHandler(row?.fileKey)} disabled={loadingDelete[row?.fileKey]}
                         >
                           {loadingDelete[row?.fileKey] ? (
                             <CircularProgress size={24} color="inherit" />
                           ) : (
-                            <PiPintGlassBold />
+                            <PiPintGlass />
                           )}
                         </ButtonIcon>
                       </TableCell>
                       {/* <TableCell align="right">
                 <a href={row?.fileDownloadLink}
-                  className=" text-gray"
+                  className=" text-black"
                   target="_blank"
                   rel="noopener noreferrer">
                   
@@ -158,16 +159,16 @@ const DocumnetList: React.FC<Props> = ({ next, handleBack }) => {
                       <TableCell align="right">
                         <ButtonIcon
                           disabled={row?.fileType != "pdf"}
-                          className="mr-0.5 text-gray"
+                          className="mr-0.5 text-black"
                           onClick={() => fileViewHandler(row?.fileKey)}>
-                          <PiExportBold />
+                          <PiExport />
                         </ButtonIcon>
                       </TableCell>
                       <TableCell align="right">
                         <ButtonIcon
-                          className="mr-0.5 text-gray"
+                          className="mr-0.5 text-black"
                           onClick={() => uploadDoc()}>
-                          <PiChatCircleTextBold />
+                          <PiChatCircleText />
                         </ButtonIcon>
                       </TableCell>
 

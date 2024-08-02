@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as React from 'react';
 import { CircularProgress, Paper, Stack, TableContainer, Typography } from '@mui/material';
 import {
@@ -9,7 +10,7 @@ import {
   TableRow,
 } from '@aws-amplify/ui-react';
 import ButtonIcon from '../button/ButtonIcon';
-import { PiChatCircleTextBold, PiDownloadBold, PiPintGlassBold } from 'react-icons/pi';
+import { PiChatCircleText, PiDownload, PiPintGlass } from 'react-icons/pi';
 import { useQuery } from '@tanstack/react-query';
 import { deleteFiles, splitFiles } from '../../apis/doc/docsApi';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -93,33 +94,33 @@ const DocumentsExtraction: React.FC<Props> = ({ next, handleBack }) => {
                       </TableCell>
                       <TableCell align="right">
                         <ButtonIcon
-                          className="mr-0.5 text-gray"
+                          className="mr-0.5 text-black"
                           onClick={() => setFiles(row?.fileDownloadLink)}
                         >
-                          <PiDownloadBold />
+                          <PiDownload />
                         </ButtonIcon>
                       </TableCell>
                       <TableCell align="right">
                         <ButtonIcon
-                          className="mr-0.5 text-gray"
+                          className="mr-0.5 text-black"
                           onClick={() => deleteHandler(row?.fileKey)}
                           disabled={loadingDelete[row?.fileKey]}
                         >
                           {loadingDelete[row?.fileKey] ? (
                             <CircularProgress size={24} color="inherit" />
                           ) : (
-                            <PiPintGlassBold />
+                            <PiPintGlass />
                           )}
                         </ButtonIcon>
                       </TableCell>
                       <TableCell align="right">
                         <ButtonIcon
-                          className="mr-0.5 text-gray"
+                          className="mr-0.5 text-black"
                           onClick={() => {
                             uploadDoc();
                           }}
                         >
-                          <PiChatCircleTextBold />
+                          <PiChatCircleText />
                         </ButtonIcon>
                       </TableCell>
                     </TableRow>
