@@ -3,9 +3,9 @@ import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
 import StepButton from "@mui/material/StepButton";
 import Typography from "@mui/material/Typography";
-import { Box, Grid, Paper, Stack } from "@mui/material";
+import { Grid, Paper, Stack } from "@mui/material";
 import { Card } from "@aws-amplify/ui-react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import UploadDocumnet from "../Steps/UploadDocumnet";
 import DocumnetList from "../Steps/DocumnetList";
 import DocumentsExtraction from "../Steps/DocumentsExtraction";
@@ -102,18 +102,18 @@ const Sidebar: React.FC<Props> = () => {
         [navigate]
     );
 
-    const handleComplete = React.useCallback(() => {
-        setCompleted((prevCompleted) => ({
-            ...prevCompleted,
-            [activeStep]: true,
-        }));
-        handleNext();
-    }, [activeStep, handleNext]);
+    // const handleComplete = React.useCallback(() => {
+    //     setCompleted((prevCompleted) => ({
+    //         ...prevCompleted,
+    //         [activeStep]: true,
+    //     }));
+    //     handleNext();
+    // }, [activeStep, handleNext]);
 
-    const handleReset = React.useCallback(() => {
-        setActiveStep(0);
-        setCompleted({});
-    }, []);
+    // const handleReset = React.useCallback(() => {
+    //     setActiveStep(0);
+    //     setCompleted({});
+    // }, []);
 
     const next = () => {
         handleNext();
@@ -125,7 +125,7 @@ const Sidebar: React.FC<Props> = () => {
 
             <Grid item xs={3}>
 
-                <Stack sx={{ position: 'relative', top: '-80px', left: '40px', }}>
+                <Stack sx={{ position: 'relative', top: '-84px', left: '34px', }}>
                     <Paper>
                         <Card >
                             <Stepper nonLinear activeStep={activeStep} orientation="vertical">
@@ -151,7 +151,7 @@ const Sidebar: React.FC<Props> = () => {
             <Grid item xs={9}>
 
                 <Stack sx={{ mx: 6, mb: 10 }}>
-                    <Stack sx={{ position: 'relative', top: '-80px', left: '10px' }}>
+                    <Stack sx={{ position: 'relative', top: '-84px', left: '10px' }}>
                         <Typography color={"white"} variant="h5">{STEPS[activeStep].name}</Typography>
                     </Stack>
                     <Stack>

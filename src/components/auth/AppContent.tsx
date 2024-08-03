@@ -25,7 +25,7 @@ const AppContent: React.FC<Props> = () => {
     <Box>
       <Navbar/>
       <Box className=''>
-        <Box height={140} className='bg-theme-color px-10'>
+        <Box height={180} className='bg-theme-color px-10 pt-4'>
           <Typography color={"white"} variant="h5">Intelligent Document Processing</Typography>
         </Box>
         <Box>
